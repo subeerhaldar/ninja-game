@@ -5,8 +5,8 @@ LEVELS = [
     {
         "platforms": [
             (0, 560, 800, 40), # Floor
-            (200, 450, 150, 20),
-            (500, 350, 150, 20),
+            (200, 450, 150, 20, 150, 2), # Moving
+            (450, 350, 150, 20, 150, 2), # Moving
             (380, 220, 100, 20),
         ],
         "obstacles": [],
@@ -18,9 +18,9 @@ LEVELS = [
         "platforms": [
             (0, 560, 800, 40), # Floor
             (150, 480, 100, 20),
-            (350, 410, 100, 20),
+            (300, 410, 100, 20, 180, 3), # Moving
             (550, 340, 100, 20),
-            (350, 260, 100, 20), # Intermediate step to get back left
+            (350, 260, 100, 20, 150, 2), # Moving
             (150, 180, 150, 20), # Final platform
         ],
         "obstacles": [],
@@ -32,9 +32,9 @@ LEVELS = [
         "platforms": [
             (0, 560, 800, 40), # Solid Floor (no holes)
             (300, 460, 100, 20), # Step 1 
-            (150, 360, 100, 20), # Step 2
+            (120, 360, 100, 20, 150, 2), # Moving Step 2
             (350, 260, 100, 20), # Step 3
-            (550, 160, 100, 20)  # Step 4
+            (500, 160, 100, 20, 150, 3)  # Moving Step 4
         ],
         "obstacles": [],
         "goal": (580, 100, 40, 60),
@@ -45,9 +45,9 @@ LEVELS = [
         "platforms": [
             (0, 560, 200, 40), # Larger starting floor
             (200, 460, 120, 20),
-            (350, 460, 120, 20),
+            (300, 460, 120, 20, 180, 2), # Moving
             (500, 360, 120, 20),
-            (350, 260, 120, 20),
+            (300, 260, 120, 20, 180, 3), # Moving
             (200, 160, 120, 20),
             (50, 160, 120, 20)
         ],
@@ -65,9 +65,9 @@ LEVELS = [
         "platforms": [
             (0, 560, 300, 40), # Bigger start floor
             (250, 500, 150, 20), 
-            (450, 440, 150, 20),
+            (400, 440, 150, 20, 180, 2), # Moving
             (650, 380, 150, 20),
-            (450, 300, 150, 20),
+            (350, 300, 150, 20, 200, 3), # Moving
             (250, 220, 150, 20),
             (50, 160, 200, 20), # Huge Goal platform
         ],
@@ -150,7 +150,12 @@ for i in range(8, 16):
         cur_x = max(50, min(550, cur_x))
         
         cur_y -= random.randint(40, 70) # Very small vertical jump
-        platforms.append((cur_x, cur_y, 200, 20)) # Massive 200px wide platforms
+        if step % 2 == 1:
+            move_range = random.randint(100, 180)
+            speed = random.randint(2, 3)
+            platforms.append((cur_x, cur_y, 200, 20, move_range, speed))
+        else:
+            platforms.append((cur_x, cur_y, 200, 20))
         
     # Place goal on the very last platform we generated
     goal = (cur_x + 50, cur_y - 60, 40, 60)

@@ -130,6 +130,21 @@ class Ninja(pygame.sprite.Sprite):
             self.image = self.original_image
         else:
             self.image = self.flipped_image
+            
+        # Carry player horizontally if standing on a moving platform
+        for platform in platforms:
+            if (self.rect.bottom == platform.rect.top and 
+                self.rect.right > platform.rect.left and 
+                self.rect.left < platform.rect.right):
+                if hasattr(platform, 'movement_range') and platform.movement_range > 0:
+                    self.rect.x += platform.speed * platform.direction
+                    # Resolve collisions to prevent clipping
+                    for p in platforms:
+                        if p != platform and self.rect.colliderect(p.rect):
+                            if platform.speed * platform.direction > 0:
+                                self.rect.right = p.rect.left
+                            else:
+                                self.rect.left = p.rect.right
         
         # 1. Update X position
         self.rect.x += self.velocity.x
@@ -157,8 +172,12 @@ class Ninja(pygame.sprite.Sprite):
                     self.velocity.y = 0
 
 class Platform(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height, element_color=None):
+    def __init__(self, x, y, width, height, element_color=None, movement_range=0, speed=2):
         super().__init__()
+        self.start_x = x
+        self.movement_range = movement_range
+        self.speed = speed
+        self.direction = 1
         try:
             raw_plat = pygame.image.load("assets/platform.png").convert_alpha()
             self.image = pygame.transform.scale(raw_plat, (width, height))
@@ -188,6 +207,17 @@ class Platform(pygame.sprite.Sprite):
             self.image.fill(color)
             pygame.draw.rect(self.image, (255, 255, 255), (0, 0, width, height), 2)
         self.rect = self.image.get_rect(topleft=(x, y))
+
+    def update(self):
+        if self.movement_range > 0:
+            self.rect.x += self.speed * self.direction
+            # Toggle direction on bounds
+            if self.rect.x >= self.start_x + self.movement_range:
+                self.rect.x = self.start_x + self.movement_range
+                self.direction = -1
+            elif self.rect.x <= self.start_x:
+                self.rect.x = self.start_x
+                self.direction = 1
 
 class Goal(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height):

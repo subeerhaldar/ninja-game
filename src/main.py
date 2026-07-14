@@ -364,7 +364,9 @@ def main():
         
         # Spawn platforms
         for p in level_data["platforms"]:
-            plat = Platform(p[0], p[1], p[2], p[3], plat_tint)
+            move_range = p[4] if len(p) > 4 else 0
+            speed = p[5] if len(p) > 5 else 2
+            plat = Platform(p[0], p[1], p[2], p[3], plat_tint, move_range, speed)
             platforms.add(plat)
             all_sprites.add(plat)
             
@@ -500,6 +502,7 @@ def main():
                 
         elif state_data["current_state"] == GameState.GAMEPLAY:
             # Update physics
+            platforms.update()
             player.update(platforms)
             enemies.update(platforms)
             
