@@ -1,45 +1,22 @@
 from dataclasses import dataclass
 
 @dataclass
-class NinjaDuo:
+class NinjaCharacter:
     id: int
     name: str
-    ninja_1: str
-    ninja_2: str
     element: str
     description: str
+    sprite_file: str
 
 ROSTER = [
-    NinjaDuo(1, "Shadow Strikers", "Kage", "Yoru", "Darkness", "Masters of stealth and assassination."),
-    NinjaDuo(2, "Blazing Fists", "Aki", "Homura", "Fire", "Aggressive attackers with high burst damage."),
-    NinjaDuo(3, "Frostbite", "Yuki", "Hyoga", "Ice", "They freeze enemies in their tracks."),
-    NinjaDuo(4, "Tempest Twins", "Sora", "Kaze", "Wind", "Incredibly fast and agile fighters."),
-    NinjaDuo(5, "Earth Shakers", "Iwa", "Daichi", "Earth", "Heavy hitters with impenetrable defense."),
-    NinjaDuo(6, "Aqua Dancers", "Mizu", "Umi", "Water", "Fluid movements and healing abilities."),
-    NinjaDuo(7, "Thunder Claps", "Rai", "Kaminari", "Lightning", "Stunning strikes and paralyzing shocks."),
-    NinjaDuo(8, "Venomous Vipers", "Hebi", "Doku", "Poison", "Masters of damage over time."),
-    NinjaDuo(9, "Light Bringers", "Hikari", "Taiyo", "Light", "Blinding speed and holy attacks."),
-    NinjaDuo(10, "Steel Forged", "Hagane", "Tetsu", "Metal", "Weapons experts with razor-sharp blades."),
-    NinjaDuo(11, "Phantom Veil", "Rei", "Yurei", "Spirit", "Ethereal fighters who pass through attacks."),
-    NinjaDuo(12, "Crimson Lotus", "Aka", "Bara", "Blood", "They draw power from their own life force."),
-    NinjaDuo(13, "Silent Owls", "Fukuro", "Mori", "Wood", "Nature aligned assassins."),
-    NinjaDuo(14, "Iron Claws", "Tora", "Kuma", "Beast", "Feral fighting styles and immense strength."),
-    NinjaDuo(15, "Sand Vipers", "Suna", "Sabaku", "Sand", "Mirage creators and desert wanderers."),
-    NinjaDuo(16, "Moonlight Blades", "Tsuki", "Hoshi", "Lunar", "Powerful under the night sky."),
-    NinjaDuo(17, "Sun Flares", "Natsu", "Hi", "Solar", "Burn with the intensity of the sun."),
-    NinjaDuo(18, "Gravity Benders", "Juryoku", "Inryoku", "Gravity", "Control the weight of objects and foes."),
-    NinjaDuo(19, "Time Weavers", "Toki", "Jikan", "Time", "Manipulate the flow of combat."),
-    NinjaDuo(20, "Space Drifters", "Kukan", "Sora", "Void", "Teleportation and spatial distortions."),
-    NinjaDuo(21, "Sonic Booms", "Oto", "Hibiki", "Sound", "Deafening attacks and echolocation."),
-    NinjaDuo(22, "Crystal Shards", "Kessho", "Ishi", "Crystal", "Reflective defense and sharp projectiles."),
-    NinjaDuo(23, "Magma Cores", "Yogan", "Kazai", "Magma", "Melt through any obstacle."),
-    NinjaDuo(24, "Storm Callers", "Arashi", "Kumo", "Storm", "Unpredictable weather manipulation."),
-    NinjaDuo(25, "Dream Walkers", "Yume", "Maboroshi", "Illusion", "Confuse enemies with false realities."),
-    NinjaDuo(26, "Bone Crushers", "Hone", "Gaikotsu", "Bone", "Macabre warriors with skeletal armor."),
-    NinjaDuo(27, "Soul Reapers", "Tamashii", "Shin", "Death", "Steal the essence of their targets."),
-    NinjaDuo(28, "Mind Benders", "Seishin", "Noha", "Psychic", "Telekinesis and mental assaults."),
-    NinjaDuo(29, "Plasma Sparks", "Purazuma", "Senko", "Plasma", "Superheated energy beams."),
-    NinjaDuo(30, "Mirror Images", "Kagami", "H反射", "Mirror", "Reflect attacks back at the sender."),
-    NinjaDuo(31, "Smoke Screens", "Kemuri", "Kiri", "Smoke", "Choke out enemies and disappear."),
-    NinjaDuo(32, "Ash Fallers", "Hai", "Sumi", "Ash", "Remnants of destruction."),
+    NinjaCharacter(1, "Naruto Uzumaki", "Wind", "A hyperactive ninja containing the Nine-Tails. Master of Rasengan.", "player_naruto.png"),
+    NinjaCharacter(2, "Sasuke Uchiha", "Lightning", "A rogue ninja seeking power. Master of Chidori and Sharingan.", "player_sasuke.png"),
+    NinjaCharacter(3, "Itachi Uchiha", "Darkness", "A genius rogue ninja of Akatsuki. Master of genjutsu.", "player_itachi.png"),
+    NinjaCharacter(4, "Kakashi Hatake", "Storm", "The Copy Ninja of Team 7. Master of Chidori and Sharingan.", "player_kakashi.png"),
+    NinjaCharacter(5, "Sakura Haruno", "Earth", "A medical ninja with monstrous strength and chakra control.", "player_sakura.png"),
+    NinjaCharacter(6, "Gaara", "Sand", "The Kazekage of the Sand. Master of absolute sand defense.", "player_gaara.png"),
+    NinjaCharacter(7, "Rock Lee", "Beast", "A taijutsu specialist who can open the Eight Inner Gates.", "player_lee.png"),
+    NinjaCharacter(8, "Hinata Hyuga", "Light", "A gentle fist practitioner possessing the Byakugan eyes.", "player_hinata.png"),
+    NinjaCharacter(9, "Pain (Nagato)", "Void", "The god-like leader of Akatsuki. Master of Almighty Push.", "player_pain.png"),
+    NinjaCharacter(10, "Minato Namikaze", "Solar", "The Fourth Hokage known as the Yellow Flash of the Leaf.", "player_minato.png"),
 ]
