@@ -47,7 +47,7 @@ def main():
         
     bg_image = base_bg_image
 
-    # Chiptune generator
+    # Chiptune generator supporting multiple wave types for random chiptune sounds
     def make_chiptune_track(notes, tempo=120, sample_rate=22050):
         beat_duration = 60.0 / tempo
         samples = bytearray()
@@ -55,15 +55,26 @@ def main():
             duration = beats * beat_duration
             num_samples = int(duration * sample_rate)
             
+            # Select random retro wave type for each note to make a variety of sounds
+            wave_type = random.choice(["square", "triangle", "noise"])
+            
             for i in range(num_samples):
                 if freq == 0:
                     val_int = 0
                 else:
                     period = sample_rate / freq
-                    is_high = (i % period) < (period / 2)
                     decay = 1.0 - (i / num_samples)
-                    volume = 0.12 * decay # lower volume for background music
-                    val = volume if is_high else -volume
+                    volume = 0.08 * decay # soft background sound volume
+                    
+                    if wave_type == "square":
+                        is_high = (i % period) < (period / 2)
+                        val = volume if is_high else -volume
+                    elif wave_type == "triangle":
+                        t = (i % period) / period
+                        val = volume * (4 * t - 1) if t < 0.5 else volume * (3 - 4 * t)
+                    else: # noise
+                        val = random.uniform(-volume, volume)
+                        
                     val_int = int(val * 32767)
                     
                 samples.extend(struct.pack('<h', val_int))
@@ -98,36 +109,34 @@ def main():
                 
         env_name, _ = get_env_for_level(level_index)
         
+        # Build a randomized set of chiptune notes and sounds!
+        # C major pentatonic, minor, and exotic frequency scales
         if env_name == "Forest":
-            notes = [
-                (440, 0.5), (494, 0.5), (523, 0.5), (587, 0.5), (659, 1.0),
-                (0, 0.5), (659, 0.5), (587, 0.5), (523, 0.5), (494, 0.5), (440, 1.0)
-            ]
-            tempo = 140
+            freqs = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25]
+            tempo = random.randint(120, 150)
         elif env_name == "Volcano":
-            notes = [
-                (220, 0.25), (233, 0.25), (262, 0.25), (277, 0.25),
-                (330, 0.5), (0, 0.25), (330, 0.25), (311, 0.5),
-                (294, 0.5), (277, 0.5), (262, 1.0)
-            ]
-            tempo = 180
+            freqs = [220.00, 233.08, 261.63, 277.18, 311.13, 329.63]
+            tempo = random.randint(160, 190)
         elif env_name == "Glacier":
-            notes = [
-                (880, 1.0), (988, 1.0), (1047, 1.0), (1175, 2.0),
-                (1047, 1.0), (988, 1.0), (880, 2.0)
-            ]
-            tempo = 100
+            freqs = [587.33, 659.25, 783.99, 880.00, 987.77, 1046.50]
+            tempo = random.randint(80, 110)
         elif env_name == "Desert":
-            notes = [
-                (294, 0.5), (311, 0.5), (370, 1.0), (0, 0.25), (370, 0.25),
-                (349, 0.5), (311, 0.5), (294, 1.5)
-            ]
-            tempo = 120
+            freqs = [293.66, 311.13, 369.99, 392.00, 440.00, 466.16]
+            tempo = random.randint(110, 130)
         else: # Void
-            notes = [
-                (110, 2.0), (130, 2.0), (146, 2.0), (165, 4.0)
-            ]
-            tempo = 80
+            freqs = [110.00, 130.81, 146.83, 164.81, 220.00, 261.63]
+            tempo = random.randint(70, 90)
+            
+        # Build sequence of 20 random notes/sound effects!
+        notes = []
+        for _ in range(20):
+            if random.random() < 0.8:
+                freq = random.choice(freqs)
+            else:
+                freq = 0 # rest / pause
+            # Random duration (beats)
+            beats = random.choice([0.25, 0.5, 0.75, 1.0])
+            notes.append((freq, beats))
             
         try:
             current_music_sound = make_chiptune_track(notes, tempo)
