@@ -69,19 +69,15 @@ class Ninja(pygame.sprite.Sprite):
     def load_character_images(self):
         # Try loading custom character sprite
         try:
-            raw_image = pygame.image.load(f"assets/{self.sprite_file}").convert()
-            raw_image.set_colorkey((0, 0, 0))
-            raw_image = raw_image.convert_alpha()
-            img = pygame.transform.scale(raw_image, (60, 80))
+            img = pygame.image.load(f"assets/{self.sprite_file}").convert_alpha()
+            img = pygame.transform.scale(img, (60, 80))
             flipped_img = pygame.transform.flip(img, True, False)
             return img, flipped_img
         except:
             # Fallback to player_naruto.png tinted with element color
             try:
-                raw_image = pygame.image.load("assets/player_naruto.png").convert()
-                raw_image.set_colorkey((0, 0, 0))
-                raw_image = raw_image.convert_alpha()
-                img = pygame.transform.scale(raw_image, (60, 80))
+                img = pygame.image.load("assets/player_naruto.png").convert_alpha()
+                img = pygame.transform.scale(img, (60, 80))
                 
                 tint = ELEMENT_COLORS.get(self.element, (255, 255, 255))
                 color_surf = pygame.Surface(img.get_size()).convert_alpha()
@@ -211,10 +207,8 @@ class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         try:
-            raw_image = pygame.image.load("assets/ninja.png").convert()
-            raw_image.set_colorkey((0, 0, 0))
-            raw_image = raw_image.convert_alpha()
-            self.original_image = pygame.transform.scale(raw_image, (60, 80))
+            img = pygame.image.load("assets/ninja.png").convert_alpha()
+            self.original_image = pygame.transform.scale(img, (60, 80))
             # Tint black for evil clone look
             color_surf = pygame.Surface(self.original_image.get_size()).convert_alpha()
             color_surf.fill((50, 50, 50, 255))
